@@ -24,6 +24,8 @@ admin.site.index_title = 'House Administration'
 
 urlpatterns = [
     path('', include('dashboard.urls')),
-    path('admin/', admin.site.urls),
+    path('people/', include('people.urls')),
     path('auth/', include('django.contrib.auth.urls')),
+
+    path('admin/', admin.site.urls),
 ]

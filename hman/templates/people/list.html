@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}People{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">People</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">All the people registered on the system can be found here.</p>
+    </div>
+</div>
+
+    <div class="row">
+        {% for person in object_list %}
+
+            <div class="card col-sm">
+              <img class="card-img-top" src="{{ person.picture.url }}" alt="{{ person.full_name }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ person.full_name }}</h5>
+                <p class="card-text">{{ person.bio }}</p>
+                <a href="#" class="btn btn-primary">View Profile</a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
