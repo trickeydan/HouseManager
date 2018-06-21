@@ -64,6 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'hman.context_processors.house'
             ],
         },
     },
@@ -128,3 +130,9 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = BASE_DIR + '/static/media/'
 MEDIA_URL = '/static/media/'
+
+# House Settings
+
+HOUSE = {
+    'name': '12 Heatherdeane Road'
+}

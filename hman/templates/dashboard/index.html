@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-    <p>This is the dashboard</p>
-</body>
-</html>
+{% extends "layouts/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Dashboard</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">Annoyingly, this is all that exists on the dashboard currently.</p>
+    </div>
+</div>
+{% endblock %}
