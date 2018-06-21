@@ -16,11 +16,11 @@
         {% for person in object_list %}
 
             <div class="card col-sm">
-              <img class="card-img-top" src="{{ person.picture.url }}" alt="{{ person.full_name }}">
+              <img class="card-img-top img-fluid rounded mx-auto d-block" src="{{ person.picture.url }}" alt="{{ person.full_name }}">
               <div class="card-body">
                 <h5 class="card-title">{{ person.full_name }}</h5>
                 <p class="card-text">{{ person.bio }}</p>
-                <a href="#" class="btn btn-primary">View Profile</a>
+                <a href="{% url 'people:view' person.id %}" class="btn btn-primary">View Profile</a>
               </div>
             </div>
         {% endfor %}

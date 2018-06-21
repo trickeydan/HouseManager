@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ object }}{% endblock %}
+
+{% block content %}
+<h1>{{ object }}</h1>
+<a href="{% url 'people:index' %}"><p class="btn btn-primary">Back to People</p></a>
+<div class="row">
+    <div class="card col-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Information</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+
+                <img class="img-fluid rounded mx-auto d-block" src="{{ object.picture.url }}">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Full Name</td>
+                      <td>{{ object.full_name }}</td>
+                    </tr>
+                    <tr>
+                      <td>Email</td>
+                      <td>{{ object.email }}</td>
+                    </tr>
+                    <tr>
+                      <td>Phone Number</td>
+                      <td>{{ object.phone_number }}</td>
+                    </tr>
+                    <tr>
+                      <td>Gender</td>
+                      <td>{{ object.gender }}</td>
+                    </tr>
+                    <tr>
+                      <td>Pronouns</td>
+                      <td>{{ object.pronouns }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+    <div class="card col-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Actions</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                Currently, no actions are available.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
