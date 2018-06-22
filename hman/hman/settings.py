@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+import os, sys
+import yaml
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,6 +140,12 @@ MEDIA_URL = '/static/media/'
 
 # House Settings
 
-HOUSE = {
-    'name': '12 Heatherdeane Road'
-}
+HOUSE_FILE =  os.path.join(BASE_DIR, 'hman', 'house.yml')
+
+try:
+    with open(HOUSE_FILE, "r") as course_file:
+        HOUSE = yaml.load(course_file)
+except FileNotFoundError:
+    sys.exit("house.yml could not be found")
+except yaml.YAMLError:
+    sys.exit("house.yml contained invalid YAML")
