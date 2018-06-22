@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -7,8 +8,9 @@ class Person(models.Model):
         verbose_name_plural = "people"
 
         permissions = (
-            ("people.can_view_others", "Can view other people"),
-            ("people.can_list_others", "Can list other people"),
+            ("can_view_others", "Can view other people"),
+            ("can_list_others", "Can list other people"),
+            ("can_edit_profile", "Can edit / view their profile"),
         )
 
     display_name = models.CharField(max_length=50)
@@ -22,6 +24,9 @@ class Person(models.Model):
     def __str__(self):
         return self.display_name
 
+    def get_absolute_url(self):
+        return reverse('people:index')
+
     @property
     def full_name(self):
         return self.user.first_name + ' ' + self.user.last_name
@@ -29,3 +34,7 @@ class Person(models.Model):
     @property
     def email(self):
         return self.user.email
+
+    @staticmethod
+    def get_from_user(user):
+        return Person.objects.all().filter(user=user).first()

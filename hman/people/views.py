@@ -1,4 +1,4 @@
-from hman.views import DetailView, ListView
+from hman.views import DetailView, ListView, UpdateView
 from hman.mixins import PermissionRequiredMixin
 
 from .models import Person
@@ -18,3 +18,13 @@ class PersonView(PermissionRequiredMixin, DetailView):
     permission_required = 'people.can_view_others'
     model = Person
 
+
+class ProfileView(UpdateView):
+    permission_required = 'people.can_edit_profile'
+    template_name = 'people/profile.html'
+    model = Person
+
+    fields = ['display_name', 'phone_number', 'picture', 'gender', 'pronouns', 'bio']
+
+    def get_object(self, queryset=None):
+        return Person.get_from_user(self.request.user)
