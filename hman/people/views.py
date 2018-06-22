@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from hman.views import DetailView, ListView
 from hman.mixins import PermissionRequiredMixin
 
 from .models import Person
