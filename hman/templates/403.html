@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Access Denied</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ exception }}</p>
+    </div>
+</div>
+{% endblock %}

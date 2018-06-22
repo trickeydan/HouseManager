@@ -20,7 +20,9 @@
               <div class="card-body">
                 <h5 class="card-title">{{ person.full_name }}</h5>
                 <p class="card-text">{{ person.bio }}</p>
-                <a href="{% url 'people:view' person.id %}" class="btn btn-primary">View Profile</a>
+                {% if perms.people.can_view_others %}
+                    <a href="{% url 'people:view' person.id %}" class="btn btn-primary">View Profile</a>
+                {% endif %}
               </div>
             </div>
         {% endfor %}

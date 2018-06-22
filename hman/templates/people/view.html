@@ -4,7 +4,10 @@
 
 {% block content %}
 <h1>{{ object }}</h1>
-<a href="{% url 'people:index' %}"><p class="btn btn-primary">Back to People</p></a>
+{% if perms.people.can_list_others %}
+    <a href="{% url 'people:index' %}"><p class="btn btn-primary">Back to People</p></a>
+{% endif %}
+
 <div class="row">
     <div class="card col-sm">
         <div class="card-header">

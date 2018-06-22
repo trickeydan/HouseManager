@@ -6,6 +6,11 @@ class Person(models.Model):
     class Meta:
         verbose_name_plural = "people"
 
+        permissions = (
+            ("people.can_view_others", "Can view other people"),
+            ("people.can_list_others", "Can list other people"),
+        )
+
     display_name = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15)
     picture = models.ImageField(upload_to='people')
