@@ -50,7 +50,12 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                Currently, no actions are available.
+                {% if object.id == me.id %}
+                   <a href="{% url 'people:profile' %}"><btn class="btn btn-primary">Edit My Profile</btn></a>
+                {% else %}
+                    Currently, no actions are available.
+                {% endif %}
+
             </p>
         </div>
     </div>
