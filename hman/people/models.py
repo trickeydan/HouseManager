@@ -27,7 +27,7 @@ class Person(models.Model):
         return self.display_name
 
     def get_absolute_url(self):
-        return reverse('people:index')
+        return reverse('people:view', args=[self.id])
 
     @property
     def full_name(self):

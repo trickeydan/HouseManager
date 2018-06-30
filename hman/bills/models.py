@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from people.models import Person
 
 
@@ -17,6 +18,9 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('bills:services_view', args=[self.id])
 
     @property
     def bills(self):
@@ -57,6 +61,7 @@ class Bill(TellerMixin, Transaction):
         )
 
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
+    due_by = models.DateField()
 
     @property
     def payments(self):

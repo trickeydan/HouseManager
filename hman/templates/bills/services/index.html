@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+    <h1>Services</h1>
+
+    <table class="table">
+        <thead>
+            <th>Name</th>
+            <th>Actions</th>
+        </thead>
+      <tbody>
+      {% for service in object_list %}
+        <tr>
+          <td>{{ service.name }}</td>
+          <td>
+            {% if perms.bills.can_view_services %}
+                <a href="{% url 'bills:services_view' service.id %}" class="btn btn-primary">View Details</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
