@@ -56,7 +56,28 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                Bills are not currently listable here.
+                {% if object.bills.count > 0 %}
+                    <table class="table">
+                        <thead>
+                            <th>Date Due</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for bill in object.bills.all %}
+                            <tr>
+                                <td>{{ bill.due_by }}</td>
+                                <td>{{ bill.amount_human }}</td>
+                                <td>{{ bill.status_human }}</td>
+                                <td><a href="#" class="btn btn-primary">View Bill</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    There are currently no bills for this service.
+                {% endif %}
             </p>
         </div>
     </div>

@@ -24,7 +24,7 @@ class Service(models.Model):
 
     @property
     def bills(self):
-        raise NotImplementedError
+        return Bill.objects.filter(service=self)
 
 
 class Transaction(models.Model):
@@ -46,12 +46,23 @@ class Transaction(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, default=PENDING, max_length=4)
     amount = models.IntegerField()
 
+    @property
+    def amount_human(self):
+        return " £" + str(self.amount /100)
+
+    @property
+    def status_human(self):
+        for pair in Transaction.STATUS_CHOICES:
+            if pair[0] == self.status:
+                return pair[1]
+        return self.status
+
 
 class TellerMixin:
-    teller_id = models.CharField(max_length=50, blank=True)
+    teller_id = models.CharField(max_length=50, blank=True) # This is not working :/
 
 
-class Bill(TellerMixin, Transaction):
+class Bill(Transaction):
     """A payment made out of the account to a company"""
 
     class Meta:
@@ -68,7 +79,7 @@ class Bill(TellerMixin, Transaction):
         raise NotImplementedError
 
     def __str__(self):
-        return self.service.name + " £" + str(self.amount /100)
+        return self.service.name + self.amount_human
 
 
 class Share(Transaction):
@@ -84,7 +95,7 @@ class Share(Transaction):
     person = models.ForeignKey(Person, on_delete=models.PROTECT)
 
 
-class Payment(TellerMixin, Transaction):
+class Payment(Transaction):
     """A payment made into the account by a person"""
 
     class Meta:

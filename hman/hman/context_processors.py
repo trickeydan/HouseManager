@@ -3,7 +3,7 @@ from people.models import Person
 
 
 def house(request):
-    return { 'house': settings.HOUSE}
+    return {'house': settings.HOUSE}
 
 
 def me(request):
