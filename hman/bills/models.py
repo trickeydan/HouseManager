@@ -3,6 +3,12 @@ from people.models import Person
 
 
 class Service(models.Model):
+
+    class Meta:
+        permissions = (
+            ('can_view_services', 'Can view the services for the house'),
+        )
+
     name = models.CharField(max_length=60)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -40,6 +46,13 @@ class TellerMixin:
 
 class Bill(TellerMixin, Transaction):
     """A payment made out of the account to a company"""
+
+    class Meta:
+        permissions = (
+            ('can_view_involved_bills', 'Can view the bills where involved'),
+            ('can_view_all_bills', 'Can view all bills'),
+        )
+
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
 
     @property
@@ -49,10 +62,24 @@ class Bill(TellerMixin, Transaction):
 
 class Share(Transaction):
     """A person's share of a bill"""
+
+    class Meta:
+        permissions = (
+            ('can_view_own_shares', 'Can view their own shares'),
+            ('can_view_all_shares', 'Can view all shares'),
+        )
+
     bill = models.ForeignKey(Bill, on_delete=models.PROTECT)
     person = models.ForeignKey(Person, on_delete=models.PROTECT)
 
 
 class Payment(TellerMixin, Transaction):
     """A payment made into the account by a person"""
+
+    class Meta:
+        permissions = (
+            ('can_view_own_payments', 'Can view their own payments'),
+            ('can_view_all_payments', 'Can view all payments'),
+        )
+
     person = models.ForeignKey(Person, on_delete=models.PROTECT)
