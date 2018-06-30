@@ -15,6 +15,9 @@ class Service(models.Model):
     owners = models.ManyToManyField(Person)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
     @property
     def bills(self):
         raise NotImplementedError
@@ -58,6 +61,9 @@ class Bill(TellerMixin, Transaction):
     @property
     def payments(self):
         raise NotImplementedError
+
+    def __str__(self):
+        return self.service.name + " £" + str(self.amount /100)
 
 
 class Share(Transaction):
