@@ -2,34 +2,65 @@
 
 {% block title %}Dashboard{% endblock %}
 
+{% load static %}
+
 {% block content %}
-<div class="card">
-    <div class="card-header">
-        <h5 class="mb-0">Dashboard</h5>
+
+    <h1>Dashboard</h1>
+
+    <p>The dashboard tells you loooads of useful info about the house and <strong>should</strong> contain memes.</p>
+    <div class="card-columns">
+
+        <div class="card" style="width:400px">
+          <img class="card-img-top" src="{% static house.main_image %}" alt="{{ house.name }}">
+          <div class="card-body">
+            <h4 class="card-title">Our House</h4>
+            <p class="card-text">View information about the property</p>
+            <a href="#" class="btn btn-primary">Our House</a>
+          </div>
+        </div>
+
+        <div class="card" style="width:400px">
+            <div class="card-header">People</div>
+            <div class="card-body">
+
+                <a href="#" class="btn btn-primary">View People</a>
+                <a href="#" class="btn btn-primary">My Profile</a>
+            </div>
+        </div>
+
+        <div class="card" style="width:400px">
+          <img class="card-img-top" src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="{{ house.name }}">
+        </div>
+
     </div>
-    <div class="card-body">
-        <p class="card-text">Annoyingly, this is all that exists on the dashboard currently.</p>
-    </div>
-</div>
+{% endblock %}
+
+
 <div class="row">
-    <div class="card col">
-        <div class="card-header">
-            <h5 class="mb-0">Dashboard</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-text">Annoyingly, this is all that exists on the dashboard currently.</p>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Dashboard</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Annoyingly, this is all that exists on the dashboard currently.</p>
+            </div>
         </div>
     </div>
-    <div class="card col">
-        <div class="card-header">
-            <h5 class="mb-0">Dashboard</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-text">{{house.address}}</p>
-            <p class="card-text">{{house.sortcode}}</p>
-            <p class="card-text">{{house.accountnumber}}</p>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">House Details</h5>
+            </div>
+            <div class="card-body">
+
+                <p class="card-text">{{house.address}}</p>
+                <p class="card-text">{{house.sortcode}}</p>
+                <p class="card-text">{{house.accountnumber}}</p>
+
+            </div>
         </div>
     </div>
 </div>
 
-{% endblock %}
