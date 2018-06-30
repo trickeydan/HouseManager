@@ -1,5 +1,7 @@
 from hman.views import DetailView, ListView, UpdateView
 from hman.mixins import PermissionRequiredMixin
+from django.views.generic import TemplateView as DTemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Person
 
@@ -28,3 +30,8 @@ class ProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return Person.get_from_user(self.request.user)
+
+
+class SetupView(LoginRequiredMixin, DTemplateView):
+
+    template_name = "people/setup.html"

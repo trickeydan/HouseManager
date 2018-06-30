@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
 
 
 class Person(models.Model):
@@ -37,4 +39,6 @@ class Person(models.Model):
 
     @staticmethod
     def get_from_user(user):
-        return Person.objects.all().filter(user=user).first()
+        if user.is_authenticated:
+            return Person.objects.all().filter(user=user).first()
+        return None
