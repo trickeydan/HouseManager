@@ -25,25 +25,26 @@
                       <td>Details</td>
                       <td>{{ object.description | linebreaks }}</td>
                     </tr>
-                    <tr>
-                        {% if object.owners.count == 1 %}
-                            <td>Person named on contract</td>
-                        {% else %}
-                            <td>People named on contract</td>
-                        {% endif %}
-                      <td>
-                          {% if object.owners.count > 1 %}
-                            <ul>
-                                {% for person in object.owners.objects %}
-                                    <li>{{ person.full_name }}</li>
-                                {% endfor %}
-                            </ul>
-                          {% else %}
-                            {{ object.owners.first.full_name }}
-                          {% endif %}
-
-                      </td>
-                    </tr>
+                    {% if object.owners.count > 0 %}
+                        <tr>
+                            {% if object.owners.count == 1 %}
+                                <td>Person named on contract</td>
+                            {% else %}
+                                <td>People named on contract</td>
+                            {% endif %}
+                          <td>
+                              {% if object.owners.count > 1 %}
+                                <ul>
+                                    {% for person in object.owners.all %}
+                                        <li>{{ person.full_name }}</li>
+                                    {% endfor %}
+                                </ul>
+                              {% else %}
+                                {{ object.owners.first.full_name }}
+                              {% endif %}
+                          </td>
+                        </tr>
+                    {% endif %}
                   </tbody>
                 </table>
             </p>
