@@ -21,10 +21,9 @@
         </div>
 
         <div class="card" style="width:400px">
-            <div class="card-header">People</div>
+            <div class="card-header">Who's in the house?</div>
             <div class="card-body">
-                <a href="#" class="btn btn-primary">View People</a>
-                <a href="#" class="btn btn-primary">My Profile</a>
+                Nobody
             </div>
         </div>
 
@@ -38,6 +37,16 @@
         <div class="card" style="width:400px">
           <img class="card-img-top" src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="{{ house.name }}">
         </div>
+
+        <div class="card" style="width:400px">
+          <img class="card-img-top" src="{{ me.picture.url }}" alt="{{ me }}">
+          <div class="card-body">
+            <h4 class="card-title">{{ me }}</h4>
+            <p class="card-text">{{ me.bio }}</p>
+            <a href="#" class="btn btn-primary">My Profile</a>
+          </div>
+        </div>
+
 
     </div>
 {% endblock %}
