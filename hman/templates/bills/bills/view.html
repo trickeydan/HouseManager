@@ -45,11 +45,26 @@
     </div>
     <div class="card col-sm">
         <div class="card-header">
-            <h5 class="mb-0">People</h5>
+            <h5 class="mb-0">Payments</h5>
         </div>
         <div class="card-body">
             <p class="card-text">
-
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody>
+                        {% for payment in object.payments %}
+                            <tr>
+                              <td>{{ payment.person}}</td>
+                              <td>{{ payment.amount_human }}</td>
+                              <td>{{ payment.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </p>
         </div>
     </div>

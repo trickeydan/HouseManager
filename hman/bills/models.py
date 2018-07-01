@@ -1,9 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from people.models import Person
+from hman.models import Model
 
 
-class Service(models.Model):
+class Service(Model):
 
     class Meta:
         permissions = (
@@ -27,43 +28,26 @@ class Service(models.Model):
         return Bill.objects.filter(service=self)
 
 
-class Transaction(models.Model):
+class Transaction(Model):
+
+    description = models.TextField()
+    amount = models.IntegerField()
+
+    @property
+    def amount_human(self):
+        return " £{0:.2f}".format(self.amount / 100)
+
+
+class Bill(Transaction):
+    """A payment made out of the account to a company"""
 
     COMPLETE = 'comp'
     PENDING = 'pend'
-
-    class Meta:
-        abstract = True
 
     STATUS_CHOICES = (
         (COMPLETE, 'Complete'),
         (PENDING, 'Pending'),
     )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    description = models.TextField()
-    status = models.CharField(choices=STATUS_CHOICES, default=PENDING, max_length=4)
-    amount = models.IntegerField()
-
-    @property
-    def amount_human(self):
-        return " £" + str(self.amount /100)
-
-    @property
-    def status_human(self):
-        for pair in Transaction.STATUS_CHOICES:
-            if pair[0] == self.status:
-                return pair[1]
-        return self.status
-
-
-class TellerMixin:
-    teller_id = models.CharField(max_length=50, blank=True) # This is not working :/
-
-
-class Bill(Transaction):
-    """A payment made out of the account to a company"""
 
     class Meta:
         permissions = (
@@ -73,30 +57,28 @@ class Bill(Transaction):
 
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
     due_by = models.DateField()
-
-    @property
-    def payments(self):
-        raise NotImplementedError
+    status = models.CharField(choices=STATUS_CHOICES, default=PENDING, max_length=4)
 
     def __str__(self):
         return self.service.name + self.amount_human
 
+    def get_absolute_url(self):
+        return reverse('bills:bills_view', args=[self.id])
 
-class Share(Transaction):
-    """A person's share of a bill"""
+    @property
+    def payments(self):
+        return Payment.objects.filter(associated_bill=self)
 
-    class Meta:
-        permissions = (
-            ('can_view_own_shares', 'Can view their own shares'),
-            ('can_view_all_shares', 'Can view all shares'),
-        )
-
-    bill = models.ForeignKey(Bill, on_delete=models.PROTECT)
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)
+    @property
+    def status_human(self):
+        for pair in Bill.STATUS_CHOICES:
+            if pair[0] == self.status:
+                return pair[1]
+        return self.status
 
 
 class Payment(Transaction):
-    """A payment made into the account by a person"""
+    """A change in a person's balance"""
 
     class Meta:
         permissions = (
@@ -104,4 +86,9 @@ class Payment(Transaction):
             ('can_view_all_payments', 'Can view all payments'),
         )
 
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)
+    associated_bill = models.ForeignKey(Bill, on_delete=models.PROTECT, null=True, blank=True)  # Associated bill if applicable
+    person = models.ForeignKey(Person, on_delete=models.PROTECT)  # Person the payment was made to / from
+    date = models.DateField(null=True, blank=True)  # Date the payment was made
+
+    def __str__(self):
+        return str(self.date) + " " + self.person.full_name + self.amount_human
