@@ -44,7 +44,10 @@ class Person(Model):
 
     @property
     def balance(self):
-        return self.payments.all().aggregate(models.Sum('amount'))['amount__sum']
+        l = self.payments.all().aggregate(models.Sum('amount'))['amount__sum']
+        if l is None:
+            return 0
+        return l
 
     @property
     def balance_human(self):

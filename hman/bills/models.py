@@ -29,7 +29,6 @@ class Service(Model):
 
 class Transaction(Model):
 
-    description = models.TextField()
     amount = models.IntegerField()
 
     @property
@@ -57,6 +56,7 @@ class Bill(Transaction):
     service = models.ForeignKey(Service, on_delete=models.PROTECT)
     due_by = models.DateField()
     status = models.CharField(choices=STATUS_CHOICES, default=PENDING, max_length=4)
+    description = models.TextField()
 
     def __str__(self):
         return self.service.name + self.amount_human
