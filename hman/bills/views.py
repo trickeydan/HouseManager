@@ -1,6 +1,6 @@
 from hman.views import DetailView, ListView, UpdateView
 from hman.mixins import PermissionRequiredMixin
-from .models import Service
+from .models import Service, Bill
 
 
 class ServiceListView(PermissionRequiredMixin, ListView):
@@ -16,3 +16,8 @@ class ServiceDetailView(PermissionRequiredMixin, DetailView):
     template_name = 'bills/services/view.html'
     permission_required = 'bills.can_view_services'
     model = Service
+
+
+class BillDetailView(DetailView):
+    template_name = 'bills/bills/view.html'
+    model = Bill

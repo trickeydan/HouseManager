@@ -70,7 +70,7 @@
                                 <td>{{ bill.due_by }}</td>
                                 <td>{{ bill.amount_human }}</td>
                                 <td>{{ bill.status_human }}</td>
-                                <td><a href="#" class="btn btn-primary">View Bill</a></td>
+                                <td><a href="{% url 'bills:bills_view' bill.id %}" class="btn btn-primary">View Bill</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
