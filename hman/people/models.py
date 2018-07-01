@@ -1,11 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver
+from hman.models import Model
 
 
-class Person(models.Model):
+class Person(Model):
     class Meta:
         verbose_name_plural = "people"
 
@@ -27,7 +26,7 @@ class Person(models.Model):
         return self.display_name
 
     def get_absolute_url(self):
-        return reverse('people:index')
+        return reverse('people:view', args=[self.id])
 
     @property
     def full_name(self):

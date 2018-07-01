@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ object }}{% endblock %}
+
+{% block content %}
+<h1>{{ object }}</h1>
+{% if perms.bills.can_view_services %}
+    <a href="{% url 'bills:services_view' object.service.id %}"><p class="btn btn-primary">Back to {{ object.service }}</p></a>
+{% endif %}
+
+<div class="row">
+    <div class="card col-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Information</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Service</td>
+                      <td>{{ object.service }}</td>
+                    </tr>
+                    <tr>
+                      <td>Amount</td>
+                      <td>{{ object.amount_human }}</td>
+                    </tr>
+                    <tr>
+                      <td>Date Due</td>
+                      <td>{{ object.due_by }}</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>{{ object.status_human }}</td>
+                    </tr>
+                    <tr>
+                      <td>Details</td>
+                      <td>{{ object.description | linebreaks }}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+    <div class="card col-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Payments</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody>
+                        {% for payment in object.payments %}
+                            <tr>
+                              <td>{{ payment.person}}</td>
+                              <td>{{ payment.amount_human }}</td>
+                              <td>{{ payment.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
