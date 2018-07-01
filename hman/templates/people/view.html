@@ -39,6 +39,12 @@
                       <td>Pronouns</td>
                       <td>{{ object.pronouns }}</td>
                     </tr>
+                    {% if perms.bills.can_view_all_payments %}
+                        <tr>
+                          <td>Account Balance</td>
+                          <td>{{ object.balance_human }}</td>
+                        </tr>
+                    {% endif %}
                   </tbody>
                 </table>
             </p>

@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from people.models import Person
 from hman.models import Model
 
 
@@ -14,7 +13,7 @@ class Service(Model):
     name = models.CharField(max_length=60)
     start_date = models.DateField()
     end_date = models.DateField()
-    owners = models.ManyToManyField(Person)
+    owners = models.ManyToManyField('people.Person')
     description = models.TextField()
 
     def __str__(self):
@@ -87,7 +86,7 @@ class Payment(Transaction):
         )
 
     associated_bill = models.ForeignKey(Bill, on_delete=models.PROTECT, null=True, blank=True)  # Associated bill if applicable
-    person = models.ForeignKey(Person, on_delete=models.PROTECT)  # Person the payment was made to / from
+    person = models.ForeignKey('people.Person', on_delete=models.PROTECT)  # Person the payment was made to / from
     date = models.DateField(null=True, blank=True)  # Date the payment was made
 
     def __str__(self):

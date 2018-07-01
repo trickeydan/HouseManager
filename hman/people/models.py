@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+
 from hman.models import Model
+from bills.models import Payment
 
 
 class Person(Model):
@@ -35,6 +37,18 @@ class Person(Model):
     @property
     def email(self):
         return self.user.email
+
+    @property
+    def payments(self):
+        return Payment.objects.filter(person=self)
+
+    @property
+    def balance(self):
+        return self.payments.all().aggregate(models.Sum('amount'))['amount__sum']
+
+    @property
+    def balance_human(self):
+        return "£{0:.2f}".format(self.balance / 100)
 
     @staticmethod
     def get_from_user(user):

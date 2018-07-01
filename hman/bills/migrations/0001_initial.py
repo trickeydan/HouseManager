@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('people', '0002_add_groups'),
+        ('people', '0001_initial'),
     ]
 
     operations = [
